@@ -53,12 +53,12 @@ def display(image:np.ndarray, title:str='') -> None:
     pyplot.tight_layout()
     pyplot.show()
 
-def compare(images:list, titles:list=['']) -> None:
+def compare(images:list, titles:list=[''], nrows=1) -> None:
     '''Displays multiple images'''
     nimage = len(images)
     if len(titles) == 1:
         titles = titles * nimage
-    fig, axs = pyplot.subplots(nrows=1, ncols=nimage, figsize=(5, 5*nimage))
+    fig, axs = pyplot.subplots(nrows=nrows, ncols=nimage, figsize=(5, 5*nimage))
     for ax, image, title in zip(axs.ravel(), images, titles):
         ax.imshow(image, cmap='gray')
         ax.set_title(title, fontsize=15)
@@ -66,9 +66,9 @@ def compare(images:list, titles:list=['']) -> None:
     pyplot.tight_layout()
     pyplot.show()
 
-def display_history(history:dict, metrics:list=['accuracy', 'loss']) -> None:
+def display_history(history:dict, metrics:list=['accuracy', 'loss'], number_metrics=2, figsize=(10,5)) -> None:
     '''Displays training history'''
-    fig, axs = pyplot.subplots(nrows=1, ncols=2, figsize=(10, 5))
+    fig, axs = pyplot.subplots(nrows=1, ncols=number_metrics, figsize=figsize)
     for ax, metric in zip(axs.ravel(), metrics):
         ax.plot(history[metric])
         ax.plot(history[f'val_{metric}'])
